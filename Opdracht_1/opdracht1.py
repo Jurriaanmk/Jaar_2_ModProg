@@ -124,12 +124,12 @@ res.append([False,True, fun(False,True)])
 #%%
 import requests
 req = requests.get('https://www.daggegevens.knmi.nl/klimatologie/uurgegevens',
-params={"start":"2021082200","end":"2021082223","stns":"344",
-"vars":"T","fmt":"json"})
+params={"start":"2022091100","end":"2022091200","stns":"344",
+"vars":"T", "fmt":"json"})
 data = req.json()
 
 for i in range(len(data)):
-    print(data[i]['T']/10)
+    print(data[i]['T'])
 
 # %%
 
