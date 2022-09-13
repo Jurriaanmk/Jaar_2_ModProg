@@ -23,7 +23,7 @@ print (Tijd_Uitvoer)
 #    if __name__ == "__Tijdsomzetting__":
 #        Tijdsomzetting()
 
-##%%
+#%%
 # Opgave 1A verbeterd
 def tijd_Omzetting(Uren,Minuten,Seconden):
     return (Uren*3600) + (Minuten*60) + Seconden
@@ -36,7 +36,7 @@ def tijd_Omzetting_Inverse(Invoer_Seconden):
 
     return (Uren, Minuten, Seconden)
 
-## %%
+# %%
 #Opgave 1C
 #Testen uitgevoerd, werken naar behoren.
 
@@ -51,7 +51,7 @@ def deg2rad (x):
     x = (x/360)*(2*pi)
     return (x)
 
-## %%
+# %%
 #Opgave 2B
 #Toerental naar Hz
 
@@ -64,8 +64,8 @@ def Hz2RPM (x):
     """"Rekent van Hz naar RPM"""
     x=1/x*60
     return (x)
-## %%
-#Opgave 3, 
+# %%
+#Opgave 3,
 import operator as op
 def FalseOrTrue (x,y):
     z= op.and_(x,y)
@@ -78,7 +78,7 @@ def print_waarheidstabel_And():
     print('True, False: ', op.and_(True,False))
     print('True, True: ', op.and_(True,True))
 
-## %%
+# %%
 #opgave 3B
 
 def print_waarheidstabel_Or():
@@ -103,7 +103,7 @@ def print_waarheidstabel(operator):
     return()
 
 print_waarheidstabel(op.xor)
-##%%
+#%%
 def return_waarheidstabel(operator):
     ff = [False, False, operator(False,False)]
     ft = [False, True, operator(False,True)]
@@ -112,3 +112,24 @@ def return_waarheidstabel(operator):
     return [ff, ft, tf, tt]
 
 print(return_waarheidstabel(op.xor))
+ #%%
+import operator as op
+
+fun = op.and_
+
+res = []
+res.append([False,False,fun(False,False)])
+res.append([False,True, fun(False,True)])
+
+#%%
+import requests
+req = requests.get('https://www.daggegevens.knmi.nl/klimatologie/uurgegevens',
+params={"start":"2021082200","end":"2021082223","stns":"344",
+"vars":"T","fmt":"json"})
+data = req.json()
+
+for i in range(len(data)):
+    print(data[i]['T']/10)
+
+# %%
+
