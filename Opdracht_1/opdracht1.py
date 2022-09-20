@@ -1,6 +1,6 @@
 
 #%%
-#Opgave 1A, tijds omzetting 
+#Opgave 1A, tijds omzetting
 #def Tijdsomzetting():
 #voer de tijd in bij uren, minuten en seconden.
 from cmath import pi
@@ -122,14 +122,37 @@ res.append([False,False,fun(False,False)])
 res.append([False,True, fun(False,True)])
 
 #%%
-import requests
-req = requests.get('https://www.daggegevens.knmi.nl/klimatologie/uurgegevens',
-params={"start":"2022091100","end":"2022091200","stns":"344",
-"vars":"T", "fmt":"json"})
-data = req.json()
 
-for i in range(len(data)):
-    print(data[i]['T'])
+   
+Begin_Datum = input("Begin_datum ")
+Eind_Datum = input("Eind_Datum")
+
+
+if  (len(Begin_Datum) == 10) & (len(Begin_Datum) == 10):
+    import requests
+    req = requests.get('https://www.daggegevens.knmi.nl/klimatologie/uurgegevens',
+    params={"start":Begin_Datum,"end":Eind_Datum,"stns":"344",
+    "vars":"T", "fmt":"json"})
+    data = req.json()
+    Totaal_Temp = 0
+    Totaal_Dagen = 0
+    for i in range(len(data)):
+        print(data[i]['T']/10)
+        Totaal_Temp+= (data[i]['T'])/10
+        Totaal_Dagen+= 1
+    gem_Temp =  Totaal_Temp / Totaal_Dagen
+    print('Gemiddelde Temp', gem_Temp)
+        
+elif not len(Begin_Datum) == 10:
+    print ('Begin datum is incorrect.')
+    
+elif not len(Eind_Datum) == 10:
+    print ('Eind Datum is incorrect.')
+else:
+    print ('Gast wat doe je fout')
+
+#%%
+
 
 # %%
 
