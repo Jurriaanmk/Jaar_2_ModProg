@@ -125,7 +125,7 @@ res.append([False,True, fun(False,True)])
 
    
 Begin_Datum = input("Begin_datum ")
-Eind_Datum = input("Eind_Datum")
+Eind_Datum = input("Eind_Datum ")
 
 
 if  (len(Begin_Datum) == 10) & (len(Begin_Datum) == 10):
