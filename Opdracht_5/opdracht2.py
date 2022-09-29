@@ -18,6 +18,7 @@ robot2 = Robot(1,10,0)
 #%% b en c
 # zie robot.py
 
+
 #%% d
 
 
