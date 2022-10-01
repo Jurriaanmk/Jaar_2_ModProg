@@ -11,8 +11,8 @@ from time import sleep
 from robot import Robot
 
 #%% a
-robot1 = Robot(2,5,0)
-robot2 = Robot(1,10,0)
+robot1 = Robot(1)
+robot2 = Robot(2)
 
 
 #%% b en c

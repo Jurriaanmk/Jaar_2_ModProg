@@ -10,7 +10,6 @@ License: GNU General Public License (GNU GPLv3)
 from math import cos, sin
 
 class Robot:
-    """Robot class for 2D robot objects."""
     
     def __init__(self, pose = None):
         """
