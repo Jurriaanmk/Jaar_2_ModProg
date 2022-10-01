@@ -69,6 +69,11 @@ class Robot:
     def forward(self, distance = 0.0):
         """Moves the robot over a distance in the direction of its
         current orientation."""
+        #iets met de orientatie vector en de afstand, cos en sin erbij maar zie niet in hoe.
+        self.get_location
+        
+        return 
+        
         # implement this function yourself
         raise NotImplementedError
 
@@ -87,6 +92,8 @@ class Robot:
         """
         Calculates the distance of the robot to other_robot.
         """
+        
+        
         # implement this function yourself
         raise NotImplementedError
 

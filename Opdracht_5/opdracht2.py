@@ -11,8 +11,8 @@ from time import sleep
 from robot import Robot
 
 #%% a
-robot1 = Robot(1)
-robot2 = Robot(2)
+robot1 = Robot([2.0, 1,0, 3.3])
+robot2 = Robot([4.0, 5.1, 9.2])
 
 
 #%% b en c
@@ -23,7 +23,11 @@ robot2 = Robot(2)
 
 
 #%% e
-
+robot_list = []
+for i in range(number_of_robots):
+    pose_i = ... # determine initial pose of i-th robot
+    robot_i = Robot(pose_i) # create i-th robot object
+    robot_list.append(robot_i) # add i-th robot to the list
 
 #%% f
 
