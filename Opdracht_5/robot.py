@@ -70,7 +70,7 @@ class Robot:
         """Moves the robot over a distance in the direction of its
         current orientation."""
         #iets met de orientatie vector en de afstand, cos en sin erbij maar zie niet in hoe.
-        self.get_location
+        self.get_x()+self.d
         
         return 
         
