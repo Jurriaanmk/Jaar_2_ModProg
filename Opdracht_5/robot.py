@@ -8,6 +8,7 @@ License: GNU General Public License (GNU GPLv3)
 """
 #%%
 from math import cos, sin
+from turtle import position
 
 class Robot:
     
@@ -67,25 +68,31 @@ class Robot:
         return [self.get_xdir(), self.get_ydir()]
 
     def forward(self, distance = 0.0):
+        # implement this function yourself
         """Moves the robot over a distance in the direction of its
         current orientation."""
-
-        self.set_pose = [self.get_x() + distance*self.get_xdir(), self.get_y() + distance*self.get_ydir(), self.get_orientation()]
-        return [self.set_pose]
-
+        self.set_pose( [self.get_x() + distance*self.get_xdir(), self.get_y() + distance*self.get_ydir(), self.get_orientation()])
         
-        # implement this function yourself
+        return
+        
         raise NotImplementedError
 
     def rotate(self, angle = 0.0):
         """Changes the orientation only, i.e. adds angle to the orientation."""
         # implement this function yourself
+        self.set_pose ([self.get_x(), self.get_y(), self.get_orientation()+angle])
+        
+        return 
         raise NotImplementedError
 
     def move(self,distance = 0.0, angle = 0.0):
         """First moves in a straight line over distance (forward) and then
         adds angle to its orientation (rotate)."""
         # implement this function yourself
+        self.forward(distance), self.rotate(angle)
+        self.get_pose
+        return 
+    
         raise NotImplementedError
 
     def distance_to(self, other_robot):
@@ -99,5 +106,4 @@ class Robot:
 
 # uit de class defnition
 
-#//return calculated value   in class?
 #%%

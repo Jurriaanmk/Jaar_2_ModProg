@@ -11,8 +11,9 @@ from time import sleep
 from robot import Robot
 
 #%% a
-robot1 = Robot([2.0, 1,0, 0.5])
+robot1 = Robot([2.0, 1.0, 5.0])
 robot2 = Robot([4.0, 5.1, 9.2])
+
 
 
 #%% b en c
@@ -23,6 +24,7 @@ robot2 = Robot([4.0, 5.1, 9.2])
 
 
 #%% e
+number_of_robots = 100
 robot_list = []
 for i in range(number_of_robots):
     pose_i = ... # determine initial pose of i-th robot
