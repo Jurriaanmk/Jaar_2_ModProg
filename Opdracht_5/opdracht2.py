@@ -11,7 +11,7 @@ from time import sleep
 from robot import Robot
 
 #%% a
-robot1 = Robot([2.0, 1,0, 3.3])
+robot1 = Robot([2.0, 1,0, 0.5])
 robot2 = Robot([4.0, 5.1, 9.2])
 
 

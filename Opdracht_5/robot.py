@@ -6,7 +6,7 @@ Sciences.
 Creation date: 25/08/2021
 License: GNU General Public License (GNU GPLv3)
 """
-
+#%%
 from math import cos, sin
 
 class Robot:
@@ -69,10 +69,10 @@ class Robot:
     def forward(self, distance = 0.0):
         """Moves the robot over a distance in the direction of its
         current orientation."""
-        #iets met de orientatie vector en de afstand, cos en sin erbij maar zie niet in hoe.
-        self.get_x()+self.d
-        
-        return 
+
+        self.set_pose = [self.get_x() + distance*self.get_xdir(), self.get_y() + distance*self.get_ydir(), self.get_orientation()]
+        return [self.set_pose]
+
         
         # implement this function yourself
         raise NotImplementedError
@@ -98,3 +98,6 @@ class Robot:
         raise NotImplementedError
 
 # uit de class defnition
+
+#//return calculated value   in class?
+#%%
