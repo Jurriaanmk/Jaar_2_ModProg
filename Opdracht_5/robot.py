@@ -7,7 +7,7 @@ Creation date: 25/08/2021
 License: GNU General Public License (GNU GPLv3)
 """
 #%%
-from math import cos, sin
+from math import cos, sin, sqrt
 from turtle import position
 
 class Robot:
@@ -99,15 +99,20 @@ class Robot:
         """
         Calculates the distance of the robot to other_robot.
         """
-        pose_self = self.get_pose()
+        x_pose_self = self._pose[0]
+        y_pose_self = self._pose[1]
+
         
-        pose_other = other_robot.get_pose()
+        x_pose_other = other_robot._pose[0]
+        y_pose_other = other_robot._pose[1]
         
-        
-        
-        return (pose_self,pose_other)
+        x_Distance = x_pose_other - x_pose_self
+        y_Distance = y_pose_other - y_pose_self
+        return (sqrt(x_Distance**2+y_Distance**2))
+    
         # implement this function yourself
         raise NotImplementedError
+    
 
 # uit de class defnition
 
