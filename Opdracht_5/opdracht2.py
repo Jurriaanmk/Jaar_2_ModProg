@@ -30,7 +30,13 @@ for i in range(number_of_robots):
     pose_i = ... # determine initial pose of i-th robot
     robot_i = Robot(pose_i) # create i-th robot object
     robot_list.append(robot_i) # add i-th robot to the list
-
+    
+robot_list = []
+for i in range(10):
+    for j in range (10):
+        pose = [i, j, 0.]
+        robot_object = Robot(pose)
+        robot_list.append(robot_object)
 #%% f
 
 

@@ -99,11 +99,18 @@ class Robot:
         """
         Calculates the distance of the robot to other_robot.
         """
+        pose_self = self.get_pose()
+        
+        pose_other = other_robot.get_pose()
         
         
+        
+        return (pose_self,pose_other)
         # implement this function yourself
         raise NotImplementedError
 
 # uit de class defnition
 
 #%%
+
+# %%
