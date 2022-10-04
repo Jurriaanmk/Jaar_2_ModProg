@@ -23,6 +23,7 @@ class Vector():
 x = Vector(1,0,0)
 
 #%%
+from calendar import c
 import numpy as np
 x = np.array([1,0,0])
 y = np.array([0,1,0])
@@ -43,4 +44,17 @@ A = np.array([
     [0,0,1]
 ])
 
-# %%
+#%%
+
+import numpy as np
+
+def fun(a,b,c,x):
+    return a*x**2 + b*x + c
+
+u = np.linspace(0,10,100)
+a = 3
+b = 6
+c = 14
+y = fun(a,b,c,u)
+
+#%%
