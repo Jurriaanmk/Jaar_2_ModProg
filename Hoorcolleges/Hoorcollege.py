@@ -53,9 +53,20 @@ def fun(a,b,c,x):
     return a*x**2 + b*x + c
 
 u = np.linspace(0,10,100)
-a = 3
-b = 6
-c = 14
+a = 3.
+b = 6.
+c = 14.
 y = fun(a,b,c,u)
 
+plt.figure()
+plt.plot(u,y,'.')
+plt.show()
+
+u_c = u.reshape((len(u),1))
+y_c = y.reshape((len(y),1))
+
+A = np.hstack(  (u_c**2,u_c**1,u_c**0))
+
+res = np.linalg.lstsq(A,y_c)
+x = res[0]
 #%%
