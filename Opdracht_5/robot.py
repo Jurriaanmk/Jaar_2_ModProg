@@ -9,6 +9,7 @@ License: GNU General Public License (GNU GPLv3)
 #%%
 from math import cos, sin, sqrt
 from turtle import position
+from typing_extensions import Self
 
 class Robot:
     
@@ -109,6 +110,7 @@ class Robot:
         x_Distance = x_pose_other - x_pose_self
         y_Distance = y_pose_other - y_pose_self
         return (sqrt(x_Distance**2+y_Distance**2))
+    
     
         # implement this function yourself
         raise NotImplementedError
