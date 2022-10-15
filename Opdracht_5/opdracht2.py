@@ -24,25 +24,53 @@ robot2 = Robot([4.0, 5.1, 9.2])
 
 
 #%% e
-number_of_robots = 100
-robot_list = []
-for i in range(number_of_robots):
-    pose_i = ... # determine initial pose of i-th robot
-    robot_i = Robot(pose_i) # create i-th robot object
-    robot_list.append(robot_i) # add i-th robot to the list
-    
-robot_list = []
-for i in range(10):
-    for j in range (10):
-        pose = [i, j, 0.]
-        robot_object = Robot(pose)
-        robot_list.append(robot_object)
+def Aantal_Robots_list(n):
+    a = int(sqrt(n))
+    b = int(sqrt(n))
+    robot_list = []
+    for i in range(a):
+        for j in range (b):
+            pose = [i, j, 0.0]
+            robot_list.append(pose)
+    print("aantal:", robot_list)
+    return robot_list
 #%% f
-
+def Move_all(Afstand, Richting):
+    for item in range(len(robot_list)):
+        robot = robot_list[item]
+        robot.move(Afstand, Richting)
+        robot = Robot(pose)
+        return
 
 #%% g
+def get_x(robot_list):
+    """get_x(robot_list) geeft een lijst met de x-coordinaat van de
+robots in robot_list"""
+    x_list = []
+    for robot in robot_list:
+        x_list.append(robot.get_x())
+    print("X_list",x_list)   
+    return x_list
 
+def get_y(robot_list):
+    """get_x(robot_list) geeft een lijst met de x-coordinaat van de
+robots in robot_list"""
+    y_list = []
+    for robot in robot_list:
+        y_list.append(robot.get_y())
+        print("Y_list",y_list)
+        
+    return y_list
 
+def get_x_dir(robot_list):
+    """get_x(robot_list) geeft een lijst met de x-coordinaat van de
+robots in robot_list"""
+    x_dir_list = []
+    for robot in robot_list:
+        x_dir_list.append(robot.get_xdir())
+        print("x_dir_list",x_dir_list)
+        
+    return x_dir_list
 #%% h
     
     

@@ -9,7 +9,6 @@ License: GNU General Public License (GNU GPLv3)
 #%%
 from math import cos, sin, sqrt
 from turtle import position
-from typing_extensions import Self
 
 class Robot:
     
