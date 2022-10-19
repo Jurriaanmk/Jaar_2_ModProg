@@ -8,7 +8,7 @@ n = 2
 print(f'f({n}) = {f(n)}')
 print(f'f({n**2}) = {f(n**2)}')
 #%%
-data = [['sensor 1',[0.1, 0.2, 0.3]],['sensor 2',[-0.1, -0.2, -0.3]]]
+data = [['sensor 1',[0.1, 0.2, 0.3]],['sensor 2',[-0.1, -0.2, -0.3, 1.4]]]
 print(data[0][0])
 print(data[0][0][-1])
 print(data[1][1][::2])
@@ -56,3 +56,35 @@ def split_data(message):
     return client,values
 
 #%%
+class ChatServer:
+    """Partly implemented chat server class."""
+    def __init__(self,max_connections):
+        self.max_connections = max_connections
+        self.connections = []
+        self.nr_connections = len(self.connections)
+        self.messages = {}
+    def connect(self):
+        if len(self.connections) >= self.max_connections:
+            raise RuntimeError('Cannot connect, maximum achieved.')
+        self.connections.append(self.nr_connections)
+        self.nr_connections += 1
+        return self.connections[-1]
+    def send_message(self,to_connection,message):
+        if not (to_connection in self.connections):
+            raise RuntimeError('to_connection not in connections')
+        self.messages[to_connection] = message
+    def get_message(self,connection):
+        return str(connection) + '> ' + self.message[connection]
+cs_a = ChatServer(20)
+cs_b = ChatServer(1)
+client_1 = cs_a.connect()
+client_2 = cs_a.connect()
+cs_a.send_message(client_1,'Message 1')
+cs_a.send_message(client_1,'Message 2')
+print(cs_a.get_message(client_1))
+print(cs_a.get_message(client_1))
+print(cs_a.get_message(client_2))
+client_3 = cs_b.connect()
+cs_b.send_message(client_1,'Message 4')
+print(cs_b.get_message(client_3))
+# %%

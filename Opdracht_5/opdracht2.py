@@ -9,6 +9,7 @@ Created on Thu Aug 25 16:27:21 2022
 from math import sqrt, pi
 from time import sleep
 from robot import Robot
+import time
 
 #%% a
 robot1 = Robot([2.0, 1.0, 5.0])
@@ -72,7 +73,9 @@ robots in robot_list"""
         
     return x_dir_list
 #%% h
-    
+def move_for_time(robot_list, time):
+    second()
+    for time
     
 #%% i
 # voorbeeld code is geplaatst in comments
