@@ -3,13 +3,13 @@
 """
 Created on Thu Aug 25 16:27:21 2022
 
-@author: rufus
+@author: Jurriaan Katsman, made by Rufus Fraanje
 """
 
 from math import sqrt, pi
 from time import sleep
 from robot import Robot
-import time
+from time import sleep
 
 #%% a
 robot1 = Robot([2.0, 1.0, 5.0])
@@ -25,16 +25,18 @@ robot2 = Robot([4.0, 5.1, 9.2])
 
 
 #%% e
-def Aantal_Robots_list(n):
-    a = int(sqrt(n))
-    b = int(sqrt(n))
-    robot_list = []
-    for i in range(a):
-        for j in range (b):
-            pose = [i, j, 0.0]
-            robot_list.append(pose)
-    print("aantal:", robot_list)
-    return robot_list
+robot_list = []
+#def initRobots_list(Bots):
+Bots = 4
+
+for x in range(Bots):
+    for y in range(Bots):
+        pose = [x,y,0.0]
+        robot = Robot(pose)
+        robot_list.append(robot)
+for i, robot in enumerate(robot_list):
+    print(f'Robot Locatie {i} = ', robot.get_location())
+
 #%% f
 def Move_all(Afstand, Richting):
     for item in range(len(robot_list)):
@@ -44,16 +46,17 @@ def Move_all(Afstand, Richting):
         return
 
 #%% g
-def get_x(robot_list):
+
+def get_x():
     """get_x(robot_list) geeft een lijst met de x-coordinaat van de
 robots in robot_list"""
     x_list = []
-    for robot in robot_list:
-        x_list.append(robot.get_x())
+    for robots in robot_list:
+        x_list.append(robots.get_x())
     print("X_list",x_list)   
     return x_list
 
-def get_y(robot_list):
+def get_y():
     """get_x(robot_list) geeft een lijst met de x-coordinaat van de
 robots in robot_list"""
     y_list = []
@@ -73,9 +76,9 @@ robots in robot_list"""
         
     return x_dir_list
 #%% h
-def move_for_time(robot_list, time):
-    second()
-    for time
+#def move_for_time(robot_list, tijds_invoer):
+ #   for tijds_invoer:
+        
     
 #%% i
 # voorbeeld code is geplaatst in comments
