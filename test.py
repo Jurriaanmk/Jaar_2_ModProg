@@ -56,6 +56,17 @@ def split_data(message):
     return client,values
 
 #%%
+<<<<<<< Updated upstream
+=======
+counter_a = 100
+counter_b = 200
+if counter_a < counter_b:
+    	message = str(counter_a) + ' is less than ' + str(counter_b)
+print(message)
+#%%
+
+#%%
+>>>>>>> Stashed changes
 class ChatServer:
     """Partly implemented chat server class."""
     def __init__(self,max_connections):
@@ -63,10 +74,15 @@ class ChatServer:
         self.connections = []
         self.nr_connections = len(self.connections)
         self.messages = {}
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
     def connect(self):
         if len(self.connections) >= self.max_connections:
             raise RuntimeError('Cannot connect, maximum achieved.')
         self.connections.append(self.nr_connections)
+<<<<<<< Updated upstream
         self.nr_connections += 1
         return self.connections[-1]
     def send_message(self,to_connection,message):
@@ -75,11 +91,22 @@ class ChatServer:
         self.messages[to_connection] = message
     def get_message(self,connection):
         return str(connection) + '> ' + self.message[connection]
+=======
+    self.nr_connections += 1
+return self.connections[-1]
+def send_message(self,to_connection,message):
+if not (to_connection in self.connections):
+raise RuntimeError('to_connection not in connections')
+self.messages[to_connection] = message
+def get_message(self,connection):
+return str(connection) + '> ' + self.message[connection]
+>>>>>>> Stashed changes
 cs_a = ChatServer(20)
 cs_b = ChatServer(1)
 client_1 = cs_a.connect()
 client_2 = cs_a.connect()
 cs_a.send_message(client_1,'Message 1')
+<<<<<<< Updated upstream
 cs_a.send_message(client_1,'Message 2')
 print(cs_a.get_message(client_1))
 print(cs_a.get_message(client_1))
@@ -88,3 +115,6 @@ client_3 = cs_b.connect()
 cs_b.send_message(client_1,'Message 4')
 print(cs_b.get_message(client_3))
 # %%
+=======
+cs_a.send_message(client_1,'Message 2')
+>>>>>>> Stashed changes
