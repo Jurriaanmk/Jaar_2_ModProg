@@ -71,8 +71,10 @@ class Robot:
         # implement this function yourself
         """Moves the robot over a distance in the direction of its
         current orientation."""
-        self.set_pose( [self.get_x() + distance*self.get_xdir(), self.get_y() + distance*self.get_ydir(), self.get_orientation()])
-        
+        distance_x = Robot.get_xdir(self) * distance
+        self._pose[0] = self._pose[0] + distance_x
+        distance_y = Robot.get_ydir(self) * distance
+        self._pose[1] = self._pose[1] + distance_y        
         return
         
         raise NotImplementedError
@@ -89,12 +91,10 @@ class Robot:
         """First moves in a straight line over distance (forward) and then
         adds angle to its orientation (rotate)."""
         # implement this function yourself
-        self.forward(distance), self.rotate(angle)
-        self.get_pose
-        return 
+        for i in self:
+            Robot.forward(i, distance)
+            Robot.rotate(i, angle)
     
-        raise NotImplementedError
-
     def distance_to(self, other_robot):
         """
         Calculates the distance of the robot to other_robot.
