@@ -57,8 +57,21 @@ axs[1, 1].set_title('Edge Map')
 # Show the figure
 plt.show()
 
+# %% Opgave 6-7
 
+import cv2
+import numpy as np
 
+afbeelding = cv2.imread('Bolletjes_Grijs.jpg',0)
+
+kernel = np.ones((5,5), np.uint8)
+
+afbeelding_Dilatie = cv2.dilate(afbeelding, kernel, iterations =1)
+
+cv2.imshow('input', afbeelding)
+cv2.imshow('dilatie', afbeelding_Dilatie)
+
+cv2.waitKey(0)
 
 
 
