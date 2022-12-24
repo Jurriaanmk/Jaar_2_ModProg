@@ -205,11 +205,14 @@ for i in range(rows):
     for j in range(cols):
         #k = image[i,j]
         #image[i,j] = k * drempelwaarde #(k // 32) * 32
-        if(image[i,j] >= 200):
-            helder +=1
-            image[i,j] = 200
-        elif(image[i,j] <= 30):
-            image[i,j] = 30
+        # if(image[i,j] >= 200):
+        #     image[i,j] =+ 100
+        #     helder +=1
+        #     image[i,j] = 200
+        # elif(image[i,j] <= 30):
+        #     image[i,j] = 30
+        if (image[i,j] >= 200):
+            image[i,j]= 0
 
 helderpercentage = (helder / (rows*cols) )* 100
 print(image.shape)  #print de helderheid van de afbeelding
