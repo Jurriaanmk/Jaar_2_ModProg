@@ -1,5 +1,7 @@
 #%%
 #Code om de contouren te herkenen op basis van kleur. Geen vorm herkening.
+#Om te gebruiken, voer afbeelding in bij Afbeelding, draai programma, type in console Kleuren_Herkenen("Kleur"). Type in Kleur de kleur uit de bibiloteek die je wilt.
+#Dit print het aantal x voorgekomen en middenpunt van deze kleur.
 import cv2
 import numpy as np
 from typing import Tuple
@@ -56,7 +58,7 @@ def Middenpunt_Bepalen(Contour,index: int) -> Tuple[int,int]: # Functie om te be
 
     return Middenpunt_x, Middenpunt_y
 
-def Kleuren_Herken(Kleur): #Hoofdfunctie om de kleuren te zoeken en de contours te tekenen
+def Kleuren_Herkenen(Kleur): #Hoofdfunctie om de kleuren te zoeken en de contours te tekenen
     Lower_Kleuren, Higher_Kleuren = Verkrijg_kleur_randwaardes(Kleur) # Haal de eigenschappen van de kleuren op en stop ze in de juiste waarde
 
     Basis_Mask = cv2.inRange(Afbeelding_HSV, Lower_Kleuren, Higher_Kleuren) #Maak een filter masker waar enkel de geselecteerde kleur in te zien is.
