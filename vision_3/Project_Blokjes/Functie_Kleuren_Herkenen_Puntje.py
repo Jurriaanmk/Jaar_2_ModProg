@@ -14,37 +14,41 @@ Afbeelding2 = Afbeelding.copy()
 Afbeelding2_HSV = cv2.cvtColor(Afbeelding2, cv2.COLOR_BGR2HSV)
 
 Kleuren_Bieb = {    #Bieb voor alle kleuren
-        "Rood": {
+        "rood": {
             "Waardes":(np.array([163, 155, 181]), np.array([179, 213, 223])),
             "Voorgekomen": 0
         },
-        "Wit": {
+        "wit": {
             "Waardes": (np.array([85, 9, 223]), np.array([121, 62, 255])),
             "Voorgekomen": 0
         },
-        "Blauw":{
+        "blauw":{
             "Waardes":(np.array([90, 111, 196]), np.array([113, 233, 232])),
             "Voorgekomen": 0
         },
-        "Paars":{
+        "paars":{
             "Waardes":(np.array([122, 121, 169]), np.array([130, 173, 204])),
             "Voorgekomen": 0
         },
-        "Oranje":{
+        "oranje":{
             "Waardes":(np.array([0, 121, 157]), np.array([7, 159, 231])),
             "Voorgekomen": 0
         },
-        "Groen":{
+        "groen":{
             "Waardes":(np.array([70, 190, 84]),np.array([97, 255, 255])),
             "Voorgekomen": 0
         },
-        "Geel":{
+        "geel":{
             "Waardes":(np.array([22, 241, 201]), np.array([30, 255, 225])),
             "Voorgekomen": 0
         },
     }
+def Verkrijg_Aantal_Keer_Voorgekomen_Kleur_Bieb(kleur: str) -> int: #Functie om aantal keer dat een kleur voorgekomen is op te vragen
+    kleur = kleur.lower()
+    return Kleuren_Bieb[kleur]["Voorgekomen"]
 
 def Verkrijg_kleur_randwaardes(kleur: str) -> Tuple[np.ndarray, np.ndarray]: #functie om alle kleuren optehalen
+    kleur = kleur.lower()
     return Kleuren_Bieb[kleur]["Waardes"]
 
 def Middenpunt_Bepalen(Contour,index: int) -> Tuple[int,int]: # Functie om te bepalen wat de middenpunten van alle objecten zijn en hier een stipje te zetten en de coordinaten te exporteren
@@ -78,9 +82,9 @@ def Kleuren_Herkenen(Kleur): #Hoofdfunctie om de kleuren te zoeken en de contour
 
         areas = [cv2.contourArea(c) for c in Basis_contours] #Zoek de contouren in alle contouren
         max_index = np.argmax(areas) #Selecteerd de grootste contour uit alle contouren
-        if max_index == 0:
+        if max_index >=0:
             Kleuren_Bieb[Kleur]["Voorgekomen"] += 1
-            print("Aantal keer voorgekomen: ",Kleuren_Bieb[Kleur]["Voorgekomen"])
+            print("Aantal keer voorgekomen: ",Verkrijg_Aantal_Keer_Voorgekomen_Kleur_Bieb(Kleur))
 
 
         cv2.drawContours(Afbeelding, Basis_contours,max_index, (0, 0, 0), 2) #Teken een contour in Zwart rond de grootste contour
