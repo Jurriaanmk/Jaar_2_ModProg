@@ -85,10 +85,8 @@ def Kleuren_Herkenen(Kleur): #Hoofdfunctie om de kleuren te zoeken en de contour
         if max_index >=0:
             Kleuren_Bieb[Kleur]["Voorgekomen"] += 1
             print("Aantal keer voorgekomen: ",Verkrijg_Aantal_Keer_Voorgekomen_Kleur_Bieb(Kleur))
-
-
+        
         cv2.drawContours(Afbeelding, Basis_contours,max_index, (0, 0, 0), 2) #Teken een contour in Zwart rond de grootste contour
-
         Middenpunt_Bepalen(Basis_contours,max_index)
 
     cv2.imshow('Mask_Kleur:', Basis_Mask)
