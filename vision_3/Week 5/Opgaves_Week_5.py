@@ -72,6 +72,7 @@ cv2.imshow('input', afbeelding)
 cv2.imshow('dilatie', afbeelding_Dilatie)
 
 cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 
 

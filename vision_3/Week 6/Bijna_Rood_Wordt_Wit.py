@@ -5,6 +5,9 @@ import numpy as np
 Afbeelding = cv2.imread('gekleurde_blokjes.jpg')
 Afbeelding_HSV = cv2.cvtColor(Afbeelding, cv2.COLOR_BGR2HSV)
 
+cv2.imshow('Orginele Afbeelding', Afbeelding)
+cv2.imshow('Orginele HSV', Afbeelding_HSV)
+
 Lower_Kleuren = np.array([163, 155, 181])
 Higher_Kleuren = np.array([179, 213, 223])
 
@@ -29,7 +32,7 @@ cv2.drawContours(contouren_Afbeelding, contouren, -1, (0, 255, 0), 3)
 
 
 cv2.imshow('mask',mask)
-cv2.imshow('Orginele Afbeelding', Afbeelding)
+cv2.imshow('Afbeelding Met Contour', Afbeelding)
 cv2.imshow('Contouren', contouren_Afbeelding)
 cv2.imshow('Filter Afbeelding', Filter_Afbeelding)
 cv2.imshow('Aangepaste Afbeelding', Aangepaste_Afbeelding)
