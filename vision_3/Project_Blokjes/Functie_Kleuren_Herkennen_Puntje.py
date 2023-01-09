@@ -93,14 +93,12 @@ def Oppervlakte_Check(Kleur: str, Huidig_Oppervlakte) -> bool:
 
 def Kleuren_Herkennen(Kleur):
     """Hoofdfunctie om de kleuren te zoeken en de contours te tekenen"""
-    Lower_Kleuren, Higher_Kleuren = Verkrijg_Kleur_Randwaardes(
-        Kleur)  # Haal de eigenschappen van de kleuren op en stop ze in de juiste waarde
+    Lower_Kleuren, Higher_Kleuren = Verkrijg_Kleur_Randwaardes(Kleur)  # Haal de eigenschappen van de kleuren op en stop ze in de juiste waarde
 
     # Maak een filter masker waar enkel de geselecteerde kleur in te zien is.
     Basis_Mask = cv2.inRange(Afbeelding_HSV, Lower_Kleuren, Higher_Kleuren)
     Basis_Res = cv2.bitwise_and(Afbeelding, Afbeelding, mask=Basis_Mask)
-    Basis_contours, _ = cv2.findContours(
-        Basis_Mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    Basis_contours, _ = cv2.findContours(Basis_Mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 
     if len(Basis_contours) != 0:  # Maak een blauwe contour om alle gevonden contouren
         cv2.drawContours(Afbeelding, Basis_contours, -1, (255, 0, 0), 3)
@@ -113,8 +111,7 @@ def Kleuren_Herkennen(Kleur):
         cv2.rectangle(Afbeelding, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
         # Zoek de contouren in alle contouren
-        areas = [cv2.contourArea(Max_Grootte)
-                 for Max_Grootte in Basis_contours]
+        areas = [cv2.contourArea(Max_Grootte)for Max_Grootte in Basis_contours]
         # Selecteerd de grootste contour uit alle contouren
         Grootst_Oppervlakte = max(areas)
         Max_Index = np.argmax(areas)
