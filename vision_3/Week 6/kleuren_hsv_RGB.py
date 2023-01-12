@@ -4,8 +4,6 @@ import cv2
 
 # Read an image
 image = cv2.imread('gekleurde_blokjes.jpg', cv2.IMREAD_COLOR)
-image_cv2 = cv2.imread('gekleurde_blokjes.jpg')
-
 
 def rgb_to_hsv(r, g, b):
     r, g, b = r/255.0, g/255.0, b/255.0
@@ -23,8 +21,8 @@ def rgb_to_hsv(r, g, b):
     if mx == 0:
         s = 0
     else:
-        s = df / mx
-    v = mx
+        s = (df / mx)*100
+    v = mx*100
     return h, s, v
 
 
@@ -33,12 +31,12 @@ image_hsv = np.empty_like(image)
 
 for i in range(rows):
     for j in range(cols):
-        b, g, r = image[i, j]
-        h, s, v = rgb_to_hsv(b, g, r)
+        r, g, b = image[i, j]
+        h, s, v = rgb_to_hsv(r, g, b)
         image_hsv[i, j] = [h, s, v]
 
 
-image_cv2_hsv = cv2.cvtColor(image_cv2, cv2.COLOR_BGR2HSV)
+image_cv2_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
 cv2.imshow('Manual Conversion', image_hsv)
 cv2.imshow('CV2 Conversion', image_cv2_hsv)

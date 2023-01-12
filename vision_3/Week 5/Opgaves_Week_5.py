@@ -57,6 +57,32 @@ axs[1, 1].set_title('Edge Map')
 # Show the figure
 plt.show()
 
+#%% 4
+import cv2
+import numpy as np
+
+# Read image
+img = cv2.imread("Disney.jpg", cv2.IMREAD_GRAYSCALE)
+
+# Prewitt operator kernels
+prewitt_x = np.array([[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]])
+prewitt_y = np.array([[-1, -1, -1], [0, 0, 0], [1, 1, 1]])
+
+# Apply convolution using the kernels
+prewitt_x_image = cv2.filter2D(img, -1, prewitt_x)
+prewitt_y_image = cv2.filter2D(img, -1, prewitt_y)
+
+# Add the two images to get the final result
+prewitt_image = cv2.addWeighted(prewitt_x_image, 0.5, prewitt_y_image, 0.5, 0)
+
+# Show and save the image
+cv2.imshow("Prewitt Image", prewitt_image)
+cv2.imwrite("prewitt_image.jpg", prewitt_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
 # %% Opgave 6-7
 
 import cv2
