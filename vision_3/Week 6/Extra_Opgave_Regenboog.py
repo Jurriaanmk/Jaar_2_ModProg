@@ -5,7 +5,7 @@
 import cv2
 import numpy as np
 
-Hoogte = 700
+Hoogte = 1080
 Breedte = 200
 
 # Maak een afbeelding met de maten van Breedte en Hoogte

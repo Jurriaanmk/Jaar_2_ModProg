@@ -57,6 +57,7 @@ axs[1, 1].set_title('Edge Map')
 # Show the figure
 plt.show()
 
+
 #%% 4
 import cv2
 import numpy as np

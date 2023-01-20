@@ -12,10 +12,17 @@ Middenpunt_Print = 1
 Oppervlakte_Marge = 0.2
 """Een marge factor om te kijken of een oppervlakte in het bereik van de bieb versie ligt"""
 
-Afbeelding = cv2.imread('gekleurde_blokjes.jpg')
-Afbeelding_HSV = cv2.cvtColor(Afbeelding, cv2.COLOR_BGR2HSV)
-Afbeelding2 = Afbeelding.copy()
-Afbeelding2_HSV = cv2.cvtColor(Afbeelding2, cv2.COLOR_BGR2HSV)
+#Afbeelding = cv2.imread('gekleurde_blokjes.jpg')
+#Afbeelding_HSV = cv2.cvtColor(Afbeelding, cv2.COLOR_BGR2HSV)
+#Afbeelding2 = Afbeelding.copy()
+#Afbeelding2_HSV = cv2.cvtColor(Afbeelding2, cv2.COLOR_BGR2HSV)
+
+def Afbeelding_Inladen(Afbeelding):
+    Afbeelding_HSV = cv2.cvtColor(Afbeelding, cv2.COLOR_BGR2HSV)
+    Afbeelding2 = Afbeelding.copy()
+    Afbeelding2_HSV = cv2.cvtColor(Afbeelding2, cv2.COLOR_BGR2HSV)
+
+    return Afbeelding, Afbeelding_HSV, Afbeelding2, Afbeelding2_HSV
 
 Kleuren_Bieb = {  # Bieb voor alle kleuren van de blokjes plus het aantal keer dat ze voorkomen
     "rood": {
@@ -74,8 +81,8 @@ def Verkrijg_Kleur_Oppervlakte(kleur: str) -> int:
 def Middenpunt_Bepalen(Contour, index: int) -> Tuple[int, int]:
     """Functie om te bepalen wat de middenpunten van alle objecten zijn en hier een stipje te zetten en de coordinaten te exporteren"""
     moments = cv2.moments(Contour[index])
-    Middenpunt_x = int(moments['m10'] / moments['m00'])
-    Middenpunt_y = int(moments['m01'] / moments['m00'])
+    Middenpunt_x = int(moments['m10'] / moments['m00'] + 1e-5)
+    Middenpunt_y = int(moments['m01'] / moments['m00'] + 1e-5)
     cv2.circle(Afbeelding, (Middenpunt_x, Middenpunt_y), 5, (0, 0, 0), -1)
 
     if Middenpunt_Print:
@@ -115,13 +122,22 @@ def Kleuren_Herkennen(Kleur):
         # Selecteerd de grootste contour uit alle contouren
         Grootst_Oppervlakte = max(areas)
         Max_Index = np.argmax(areas)
+        
+        Vierkant = cv2.minAreaRect(Max_Grootte)
+        ((VierkantX, VierkantY),(Breedte,Hoogte),Hoek) = Vierkant
+        Doos = cv2.boxPoints(Vierkant)
+        Doos = np.intp(Doos)
+
+        print(Hoek)
+
+        cv2.drawContours(image=Afbeelding, contours=[Doos], contourIdx=-1, color=(0,255,255), thickness=3, lineType=cv2.LINE_4)
+
 
         # print(Grootst_Oppervlakte)
 
         if Oppervlakte_Check(Kleur, Grootst_Oppervlakte):
             Kleuren_Bieb[Kleur]["Voorgekomen"] += 1
-            print("Aantal keer voorgekomen: ",
-                  Verkrijg_Aantal_Keer_Kleur_Voorgekomen(Kleur))
+            print("Aantal keer voorgekomen: ", Verkrijg_Aantal_Keer_Kleur_Voorgekomen(Kleur))
 
         # Teken een contour in Zwart rond de grootste contour
         cv2.drawContours(Afbeelding, Basis_contours, Max_Index, (0, 0, 0), 2)
@@ -129,12 +145,17 @@ def Kleuren_Herkennen(Kleur):
 
     return Basis_Mask, Afbeelding
 
-
 # %%
+#video Capture functie
+Video = cv2.VideoCapture(0)
 Aantal_Cyclussen = 0
 
-while Aantal_Cyclussen < 1:
+while (Aantal_Cyclussen < 2):
 
+    _, huidig_Frame = Video.read()
+    
+    Afbeelding, Afbeelding_HSV, Afbeelding2, Afbeelding2_HSV = Afbeelding_Inladen(huidig_Frame)
+    
     for Kleuren_Keys in Kleuren_Bieb.keys():
         print(Kleuren_Keys)
 
@@ -145,8 +166,16 @@ while Aantal_Cyclussen < 1:
 
     cv2.imshow(f'Einduitslag{Aantal_Cyclussen}', Uitslag)
 
+    if cv2.waitKey(0) & 0xFF == ord('q'):
+        Video.release()
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+        break
+    
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+    Aantal_Cyclussen +=1
 
-    Aantal_Cyclussen += 1
-    # %%
+Video.release()
+
+# %%
