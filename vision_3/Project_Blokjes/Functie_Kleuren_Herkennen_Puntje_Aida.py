@@ -6,23 +6,41 @@ import cv2
 import numpy as np
 from typing import Tuple
 
-Middenpunt_Print = 1
-"""1 = aan, 0 = uit. Print in de console de middenpunt waarde, kan gebruikt worden voor het exporteren van de middenpunten van de blokjes"""
 
+# define a video capture object
+vid = cv2.VideoCapture(0)
+  
+while(True):
+      
+    # Capture the video frame
+    # by frame
+    ret, frame = vid.read()
+  
+    # Display the resulting frame
+    cv2.imshow('frame', frame)
+    
+    # the 'q' button is set as the
+    # quitting button you may use any
+    # desired button of your choice
+    
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+  
+# After the loop release the cap object
+vid.release()
+# Destroy all the windows
+cv2.destroyAllWindows()
+
+Middenpunt_Print = 1 #1 = aan, 0 = uit. Print in de console de middenpunt waarde, kan gebruikt worden voor het exporteren van de middenpunten van de blokjes
 Oppervlakte_Marge = 0.2
 """Een marge factor om te kijken of een oppervlakte in het bereik van de bieb versie ligt"""
 
-#Afbeelding = cv2.imread('gekleurde_blokjes.jpg')
-#Afbeelding_HSV = cv2.cvtColor(Afbeelding, cv2.COLOR_BGR2HSV)
-#Afbeelding2 = Afbeelding.copy()
-#Afbeelding2_HSV = cv2.cvtColor(Afbeelding2, cv2.COLOR_BGR2HSV)
 
-def Afbeelding_Inladen(Afbeelding):
-    Afbeelding_HSV = cv2.cvtColor(Afbeelding, cv2.COLOR_BGR2HSV)
-    Afbeelding2 = Afbeelding.copy()
-    Afbeelding2_HSV = cv2.cvtColor(Afbeelding2, cv2.COLOR_BGR2HSV)
+Afbeelding = frame
+Afbeelding_HSV = cv2.cvtColor(Afbeelding, cv2.COLOR_BGR2HSV)
+Afbeelding2 = Afbeelding.copy()
+Afbeelding2_HSV = cv2.cvtColor(Afbeelding2, cv2.COLOR_BGR2HSV)
 
-    return Afbeelding, Afbeelding_HSV, Afbeelding2, Afbeelding2_HSV
 
 Kleuren_Bieb = {  # Bieb voor alle kleuren van de blokjes plus het aantal keer dat ze voorkomen
     "rood": {
@@ -78,15 +96,15 @@ def Verkrijg_Kleur_Oppervlakte(kleur: str) -> int:
     return Kleuren_Bieb[kleur]["Oppervlakte"]
 
 
-def Middenpunt_Bepalen(Contour, index: int) -> Tuple[int, int]:
+def Middenpunt_Bepalen(Contour, index: int, angle) -> Tuple[int, int]:
     """Functie om te bepalen wat de middenpunten van alle objecten zijn en hier een stipje te zetten en de coordinaten te exporteren"""
     moments = cv2.moments(Contour[index])
-    Middenpunt_x = int(moments['m10'] / moments['m00'] + 1e-5)
-    Middenpunt_y = int(moments['m01'] / moments['m00'] + 1e-5)
+    Middenpunt_x = int(moments['m10'] / moments['m00'])
+    Middenpunt_y = int(moments['m01'] / moments['m00'])
     cv2.circle(Afbeelding, (Middenpunt_x, Middenpunt_y), 5, (0, 0, 0), -1)
 
     if Middenpunt_Print:
-        print("Middenpunt: (", Middenpunt_x, ", ", Middenpunt_y, ")")
+        print("Middenpunt: (", Middenpunt_x, ", ", Middenpunt_y, ",", angle ,")")
 
     return Middenpunt_x, Middenpunt_y
 
@@ -110,9 +128,14 @@ def Kleuren_Herkennen(Kleur):
     if len(Basis_contours) != 0:  # Maak een blauwe contour om alle gevonden contouren
         cv2.drawContours(Afbeelding, Basis_contours, -1, (255, 0, 0), 3)
 
-        # Vind de grootste contour in alle gevonden contouren
-        Max_Grootte = max(Basis_contours, key=cv2.contourArea)
-        x, y, w, h = cv2.boundingRect(Max_Grootte)
+        # Vind de grootste contour in alle gevonden contouren, detecteren hoek
+        c = max(Basis_contours, key = cv2.contourArea)
+        x,y,w,h = cv2.boundingRect(c)
+        rect = cv2.minAreaRect(c)
+        ((rectX, rectY),(width,height),angle) = rect
+        cv2.putText(Afbeelding, "Angle: "+str(int(angle))+" deg", (int(rectX), int(rectY)), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1)
+        box = cv2.boxPoints(rect)
+        box = np.int0(box)
 
         # Teken een vierkant rond het grootste contour in Groen
         cv2.rectangle(Afbeelding, (x, y), (x+w, y+h), (0, 255, 0), 2)
@@ -122,61 +145,38 @@ def Kleuren_Herkennen(Kleur):
         # Selecteerd de grootste contour uit alle contouren
         Grootst_Oppervlakte = max(areas)
         Max_Index = np.argmax(areas)
-        
-        Vierkant = cv2.minAreaRect(Max_Grootte)
-        ((VierkantX, VierkantY),(Breedte,Hoogte),Hoek) = Vierkant
-        Doos = cv2.boxPoints(Vierkant)
-        Doos = np.intp(Doos)
-
-        print(Hoek)
-
-        cv2.drawContours(image=Afbeelding, contours=[Doos], contourIdx=-1, color=(0,255,255), thickness=3, lineType=cv2.LINE_4)
-
 
         # print(Grootst_Oppervlakte)
 
         if Oppervlakte_Check(Kleur, Grootst_Oppervlakte):
             Kleuren_Bieb[Kleur]["Voorgekomen"] += 1
-            print("Aantal keer voorgekomen: ", Verkrijg_Aantal_Keer_Kleur_Voorgekomen(Kleur))
+            print("Aantal keer voorgekomen: ",
+                  Verkrijg_Aantal_Keer_Kleur_Voorgekomen(Kleur))
 
         # Teken een contour in Zwart rond de grootste contour
         cv2.drawContours(Afbeelding, Basis_contours, Max_Index, (0, 0, 0), 2)
-        Middenpunt_Bepalen(Basis_contours, Max_Index)
+        Middenpunt_Bepalen(Basis_contours, Max_Index, angle)
 
     return Basis_Mask, Afbeelding
 
+
 # %%
-#video Capture functie
-Video = cv2.VideoCapture(0)
 Aantal_Cyclussen = 0
-Max_Aantal_Cyclussen = 5   #De instelbare waarde voor hoevaak de camera aan moet gaan en gaat zoeken
-Wachttijd_Tussen_Frame = 5000   #Instelbare wachttijd tussen het maken van een nieuw frame, op moment in ms
 
-while (Aantal_Cyclussen < Max_Aantal_Cyclussen):
+while Aantal_Cyclussen < 1:
 
-    _, huidig_Frame = Video.read()
-    Afbeelding, Afbeelding_HSV, Afbeelding2, Afbeelding2_HSV = Afbeelding_Inladen(huidig_Frame)
-
-    #For loop gaat door alle kleuren in de bieb
     for Kleuren_Keys in Kleuren_Bieb.keys():
         print(Kleuren_Keys)
+
         Basis_Masker, Uitslag = Kleuren_Herkennen(Kleuren_Keys)
 
         cv2.imshow(f'Mask_Kleur{Kleuren_Keys}', Basis_Masker)
         cv2.imshow(f'Uitslag_Kleur{Kleuren_Keys}', Uitslag)
-
+       
     cv2.imshow(f'Einduitslag{Aantal_Cyclussen}', Uitslag)
 
-    #Om de loop tijdig te stoppen druk op q
-    if cv2.waitKey(Wachttijd_Tussen_Frame) & 0xFF == ord('q'):
-        Video.release()
-
-        cv2.destroyAllWindows()
-        break
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
     Aantal_Cyclussen += 1
-
-Video.release()
-cv2.destroyAllWindows()
-
-# %%
+    # %%
